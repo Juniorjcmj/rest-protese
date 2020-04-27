@@ -1,0 +1,20 @@
+CREATE TABLE servico (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cadastrante varchar(255) DEFAULT NULL,
+  data_cadastro datetime DEFAULT NULL,
+  data_entrega datetime DEFAULT NULL,
+  data_pagamento datetime DEFAULT NULL,
+  forma_pagamento varchar(255) DEFAULT NULL,
+  observacao varchar(250) DEFAULT NULL,
+  paciente varchar(255) DEFAULT NULL,
+  status varchar(255) DEFAULT NULL,
+  status_pagamento varchar(255) DEFAULT NULL,
+  valor_desconto int(11) DEFAULT NULL,
+  valor_servico double DEFAULT NULL,
+  cliente_id int(11) DEFAULT NULL,
+  tipo_servico_id int(11) NOT NULL,
+  quantidade int(11) DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+  FOREIGN KEY  (tipo_servico_id)REFERENCES tipo_servico(id)
+) ;
