@@ -8,6 +8,8 @@ import br.com.jcmj.restprotese.repository.Servicos;
 import br.com.jcmj.restprotese.service.ClienteService;
 import br.com.jcmj.restprotese.service.TipoServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -19,6 +21,7 @@ public abstract class TranformacaoDtoEObj {
     private static Servicos repo;
     @Autowired
     private static  TipoServicoService tipoServicoService;
+
 
     public static Servico transformaServicoDTOemServico(ServicoDTO dto){
         Cliente cliente = clienteservice.find(dto.getClienteId());
@@ -33,6 +36,7 @@ public abstract class TranformacaoDtoEObj {
         obj.setTipoServico(tipo);
         return obj;
     }
+
     public static  ServicoDTO transformandoServicoEmServicoDTO( Servico servico){
         ServicoDTO dto = new ServicoDTO();
         dto.setId(servico.getId());

@@ -30,7 +30,7 @@ public class ServicoResource {
     @RequestMapping(value= "/{id}",method=RequestMethod.GET)
 	public ResponseEntity<ServicoDTO> find(@PathVariable Integer id)  {
 		Servico obj = service.find(id);	
-                ServicoDTO dto = TranformacaoDtoEObj.transformandoServicoEmServicoDTO(obj);
+                ServicoDTO dto = service.transformandoServicoEmServicoDTO(obj);
 		return ResponseEntity.ok().body(dto) ;
 	}
 //        @PreAuthorize("hasAnyRole('ADMIN')")
@@ -51,7 +51,7 @@ public class ServicoResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();		
 		return ResponseEntity.created(uri).build();		
 	}
-        @RequestMapping(value= "/{id}",method=RequestMethod.PUT)
+	@RequestMapping(value= "/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<Void>update(@RequestBody @Valid ServicoDTO dto, @PathVariable Integer id){        
 		
                 service.update(dto);

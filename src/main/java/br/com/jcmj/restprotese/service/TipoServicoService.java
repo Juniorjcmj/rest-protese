@@ -22,8 +22,7 @@ public class TipoServicoService {
                 "Objeto não encontrado!:" + id + ", Tipo : " + TipoServico.class.getName()));
     }
     public TipoServico findNativo(Integer id) {
-        System.out.println("entrouuuuu");
-        TipoServico obj = repo.findByIdNativo(id);
+        TipoServico obj = find(id);
         return obj;
     }
     @Transactional

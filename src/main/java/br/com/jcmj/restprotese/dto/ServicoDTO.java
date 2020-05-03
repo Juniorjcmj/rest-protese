@@ -8,45 +8,44 @@ import br.com.jcmj.restprotese.model.TipoServico;
 
 public class ServicoDTO {
 		
-	private Integer id;
-        private Double valorServico;
+	    private Integer id;
+         private Double valorServico;
          private Integer valorDesconto;
          private String cadastrante;
          private String statusPagamento;
          private String formaPagamento;
          private String observacao;
-	private String paciente;
-	private String status;	
-	private Date dataEntrega;
-        private Date dataCadastro;
-        private Date dataPagamento;
-	private Integer clienteId;	
-	private Integer tipoServicoId;	
-        private Integer quantidade;
+	     private String paciente;
+	     private String status;
+	     private Date dataEntrega;
+         private Date dataCadastro;
+         private Date dataPagamento;
+	     private Integer clienteId;
+	     private Integer tipoServicoId;
+	     private Integer quantidade;
 	public ServicoDTO() {
 		
 	}
-	
 
 	public ServicoDTO(Integer id, Double valorServico, Integer valorDesconto, String cadastrante, String paciente,
 			String status, String statusPagamento, String formaPagamento, String observacao, Date dataCadastro,
 			Date dataEntrega, Date dataPagamento, Integer quantidade, Integer clienteId,
 			Integer tipoServicoId) {
 		super();
-		this.id = id;
+	        	this.id = id;
                 this.valorServico = valorServico;
                 this.quantidade =quantidade;
                 this.dataPagamento = dataPagamento;
                 this.dataCadastro = dataCadastro;
-		this.paciente = paciente;
+	        	this.paciente = paciente;
                 this.observacao = observacao;
                 this.formaPagamento =formaPagamento;
                 this.statusPagamento = statusPagamento;
                 this.cadastrante =cadastrante;
-		this.status = status;
-		this.dataEntrega = dataEntrega;
-		this.clienteId = clienteId;
-		this.tipoServicoId = tipoServicoId;
+                this.status = status;
+                this.dataEntrega = dataEntrega;
+                this.clienteId = clienteId;
+                this.tipoServicoId = tipoServicoId;
                 this.valorDesconto = valorDesconto;
 	}
 
@@ -81,22 +80,6 @@ public class ServicoDTO {
 
 	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
-	}
-
-	public Integer getCliente() {
-		return clienteId;
-	}
-
-	public void setCliente(Integer clienteId) {
-		this.clienteId = clienteId;
-	}
-
-	public Integer getTipoServico() {
-		return tipoServicoId;
-	}
-
-	public void setTipoServico(Integer tipoServicoId) {
-		this.tipoServicoId = tipoServicoId;
 	}
 
     public Double getValorServico() {

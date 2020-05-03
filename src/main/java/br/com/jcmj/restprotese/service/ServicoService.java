@@ -29,6 +29,7 @@ public class ServicoService {
     private Servicos repo;
     @Autowired
     private TipoServicoService tipoServicoService;
+
     
 
     public Servico find(Integer id) {
@@ -38,14 +39,14 @@ public class ServicoService {
     }
     @Transactional
     public Servico insert(ServicoDTO dto) {
-       Servico obj =  TranformacaoDtoEObj.transformaServicoDTOemServico(dto);
+       Servico obj =  transformaServicoDTOemServico(dto);
         obj = repo.save(obj);
         return obj;
     }
 
 
     public Servico update(ServicoDTO dto) {
-        Servico obj =  TranformacaoDtoEObj.transformaServicoDTOemServico(dto);
+        Servico obj =  transformaServicoDTOemServico(dto);
         obj = repo.save(obj);
         return obj;       
     }
@@ -64,7 +65,7 @@ public class ServicoService {
         List<Servico> list = repo.findAll();
         List<ServicoDTO> listDTO = new ArrayList<>();
         for (Servico servico : list) {
-            ServicoDTO dto = TranformacaoDtoEObj.transformandoServicoEmServicoDTO(servico);
+            ServicoDTO dto = transformandoServicoEmServicoDTO(servico);
             listDTO.add(dto);            
         }
         return listDTO;
@@ -74,7 +75,7 @@ public class ServicoService {
         List<Servico> list = repo.findAllporNomePaciente(nome);
         List<ServicoDTO>listDTO = new ArrayList<>();
         for (Servico s : list) {
-            listDTO.add(TranformacaoDtoEObj.transformandoServicoEmServicoDTO(s));
+            listDTO.add(transformandoServicoEmServicoDTO(s));
         }
         return listDTO;
     }
@@ -83,86 +84,52 @@ public class ServicoService {
         List<Servico> list = repo.findAllporOrdemServico(id);
         List<ServicoDTO>listDTO = new ArrayList<>();
         for (Servico s : list) {
-            listDTO.add(TranformacaoDtoEObj.transformandoServicoEmServicoDTO(s));
+            listDTO.add(transformandoServicoEmServicoDTO(s));
         }
         return listDTO;
     }
-//
-//    public Cliente findByEmail(String email) {
-//        UserSS user = UserService.authenticated();
-//        if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
-//            throw new AuthorizationException("Acesso Negado");
-//        }
-//
-//        Cliente obj = repo.findByEmail(email);
-//        if (obj == null) {
-//            throw new ObjectNotFoundException("Objeto não encontrado! Id: " + user.getId()
-//                    + ", Tipo: " + Cliente.class.getName());
-//        }
-//        return obj;
-//    }
-//
-//    public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-//        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-//        return repo.findAll(pageRequest);
-//    }
-//
-//    /**
-//     * METODO AUXILIAR QUE INSTANCIA UMA CATEGORIA A PARTIR DE UM OBJETO DTO
-//     *
-//     * @param objDto
-//     * @return
-//     */
-//    public Cliente fromDTO(ClienteDTO objDto) {
-//
-//        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
-//
-//    }
-//
-//    public Cliente fromDTO(ClienteNewDTO objDTO) {
-//        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()), pe.encode(objDTO.getSenha()));
-//        Cidade cid = repoCid.getOne(objDTO.getCidadeId());
-//        Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getNumero(), objDTO.getBairro(), objDTO.getCep(), cli, cid);
-//        cli.getEnderecos().add(end);
-//        cli.getTelefones().add(objDTO.getTelefone1());
-//        if (objDTO.getTelefone2() != null) {
-//            cli.getTelefones().add(objDTO.getTelefone2());
-//        }
-//        if (objDTO.getTelefone3() != null) {
-//            cli.getTelefones().add(objDTO.getTelefone3());
-//        }
-//        return cli;
-//    }
-//
-//    public URI uploadProfilePicture(MultipartFile multipartifile) {
-//        UserSS user = UserService.authenticated();
-//        if (user == null) {
-//            throw new AuthorizationException("Acesso negado");
-//        }
-//
-//        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartifile);
-//        String fileName = prefix + user.getId() + ".jpg";
-//
-//        return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
-//
-//    }
-//
-//    @Transactional
-//    public void novoEndereco(EnderecoDTO obendDTOj) {
-//
-//        UserSS user = UserService.authenticated();
-//        if (user == null) {
-//            throw new AuthorizationException("Acesso negado");
-//        }
-//        Cliente obj = find(user.getId());
-//        Endereco e = new Endereco(null, obendDTOj.getLogradouro(), obendDTOj.getNumero(), obendDTOj.getComplemento(), obendDTOj.getBairro(), null, obj, null);
-//        obj.getEnderecos().add(e);
-//        repoEnd.saveAll(obj.getEnderecos());
-//    }
-//
-//    public Endereco findEndereco(Integer id) {
-//        Endereco end = repoEnd.peloId(id);
-//        return end;
-//    }
+
+
+    public  Servico transformaServicoDTOemServico(ServicoDTO dto){
+        Cliente cliente = clienteservice.find(dto.getClienteId());
+        TipoServico tipo = tipoServicoService.findNativo(dto.getTipoServicoId());
+        if(tipo == null){
+            double valorServicoCalculado = (tipo.getPreco() - (tipo.getPreco() * dto.getValorDesconto())/100)* dto.getQuantidade();
+        }
+
+
+        Servico obj = new Servico(dto.getId(), dto.getValorServico(),
+                dto.getValorDesconto(), "teste", dto.getPaciente(),
+                dto.getStatus(), dto.getStatusPagamento(), dto.getFormaPagamento(),
+                dto.getObservacao(), new Date(), dto.getDataEntrega(),
+                dto.getDataPagamento(), dto.getQuantidade());
+        obj.setCliente(cliente);
+        obj.setTipoServico(tipo);
+        return obj;
+    }
+
+    public   ServicoDTO transformandoServicoEmServicoDTO( Servico servico){
+        ServicoDTO dto = new ServicoDTO();
+        dto.setId(servico.getId());
+        //aqio
+        dto.setClienteId(servico.getCliente().getId());
+        dto.setTipoServicoId(servico.getTipoServico().getId());
+        dto.setCadastrante("");
+        dto.setDataCadastro(servico.getDataCadastro());
+        dto.setDataEntrega(servico.getDataEntrega());
+        dto.setDataPagamento(servico.getDataPagamento());
+        dto.setFormaPagamento(servico.getFormaPagamento());
+        dto.setObservacao(servico.getObservacao());
+        dto.setPaciente(servico.getPaciente());
+        dto.setQuantidade(servico.getQuantidade());
+        dto.setStatus(servico.getStatus());
+        dto.setStatusPagamento(servico.getStatusPagamento());
+        dto.setValorDesconto(servico.getValorDesconto());
+        dto.setValorServico(servico.getValorServico());
+
+        return dto;
+    }
+
+
 
 }

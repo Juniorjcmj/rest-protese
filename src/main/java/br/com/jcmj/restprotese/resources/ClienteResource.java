@@ -5,6 +5,9 @@ import br.com.jcmj.restprotese.service.ClienteService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +24,23 @@ public class ClienteResource {
        
     @Autowired
     private ClienteService service;
-    
+
+
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "retorna um cliente específico."),
+			@ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso!"),
+			@ApiResponse(code = 500, message="Foi gerada uma exceção."),
+	})
     @RequestMapping(value= "/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id)  {
 		Cliente obj = service.find(id);			
 		return ResponseEntity.ok().body(obj) ;
 	}
-//        @PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "retorna uma lista de clientes específico."),
+			@ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso!"),
+			@ApiResponse(code = 500, message="Foi gerada uma exceção."),
+	})
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<Cliente>> findAll()  {
 		List<Cliente> list = service.findAll();

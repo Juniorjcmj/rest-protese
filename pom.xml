@@ -69,13 +69,33 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.restdocs</groupId>
-			<artifactId>spring-restdocs-mockmvc</artifactId>
-			<scope>test</scope>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-data-rest</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jcenter-snapshots</id>
+			<name>jcenter</name>
+			<url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+		</repository>
+	</repositories>
+
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
@@ -95,6 +115,7 @@
 					</execution>
 				</executions>
 				<dependencies>
+
 
 				</dependencies>
 			</plugin>
