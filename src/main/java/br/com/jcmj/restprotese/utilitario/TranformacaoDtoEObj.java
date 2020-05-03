@@ -23,7 +23,7 @@ public abstract class TranformacaoDtoEObj {
     private static  TipoServicoService tipoServicoService;
 
 
-    public static Servico transformaServicoDTOemServico(ServicoDTO dto){
+  /*  public static Servico transformaServicoDTOemServico(ServicoDTO dto){
         Cliente cliente = clienteservice.find(dto.getClienteId());
         TipoServico tipo = tipoServicoService.findNativo(dto.getTipoServicoId());
         double valorServicoCalculado = tipo.getPreco() - (tipo.getPreco() * dto.getValorDesconto())/100;
@@ -36,7 +36,8 @@ public abstract class TranformacaoDtoEObj {
         obj.setTipoServico(tipo);
         return obj;
     }
-
+*/
+    /*
     public static  ServicoDTO transformandoServicoEmServicoDTO( Servico servico){
         ServicoDTO dto = new ServicoDTO();
         dto.setId(servico.getId());
@@ -59,5 +60,5 @@ public abstract class TranformacaoDtoEObj {
         return dto;
     }
 
-
+   */
 }

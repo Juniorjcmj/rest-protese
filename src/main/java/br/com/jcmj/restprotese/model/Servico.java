@@ -68,7 +68,7 @@ public class Servico implements Serializable {
 
 	public Servico(Integer id, Double valorServico, Integer valorDesconto, String cadastrante, String paciente,
 			String status, String statusPagamento, String formaPagamento, String observacao, Date dataCadastro,
-			Date dataEntrega, Date dataPagamento, Integer quantidade) {
+			Date dataEntrega, Date dataPagamento, Integer quantidade ) {
 		super();
 		this.id = id;
 		this.valorServico = valorServico;
@@ -83,7 +83,7 @@ public class Servico implements Serializable {
 		this.dataEntrega = dataEntrega;
 		this.dataPagamento = dataPagamento;
 		this.quantidade = quantidade;
-		
+
 	}
 
 

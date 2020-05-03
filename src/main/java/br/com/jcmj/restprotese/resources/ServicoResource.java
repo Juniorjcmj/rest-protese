@@ -28,10 +28,15 @@ public class ServicoResource {
     private ServicoService service;
     
     @RequestMapping(value= "/{id}",method=RequestMethod.GET)
-	public ResponseEntity<ServicoDTO> find(@PathVariable Integer id)  {
+	public ResponseEntity<ServicoDTO> findDTO(@PathVariable Integer id)  {
 		Servico obj = service.find(id);	
                 ServicoDTO dto = service.transformandoServicoEmServicoDTO(obj);
 		return ResponseEntity.ok().body(dto) ;
+	}
+	@RequestMapping(value= "obj/{id}",method=RequestMethod.GET)
+	public ResponseEntity<Servico> find(@PathVariable Integer id)  {
+		Servico obj = service.find(id);
+		return ResponseEntity.ok().body(obj) ;
 	}
 //        @PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
@@ -45,16 +50,15 @@ public class ServicoResource {
 	}        
        
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void>insert(@RequestBody @Valid ServicoDTO dto){
-		Servico obj = service.insert(dto);		
+	public ResponseEntity<Void>insert(@RequestBody @Valid ServicoDTO obj){
+		service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();		
 		return ResponseEntity.created(uri).build();		
 	}
 	@RequestMapping(value= "/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void>update(@RequestBody @Valid ServicoDTO dto, @PathVariable Integer id){        
-		
-                service.update(dto);
+	public ResponseEntity<Void>update(@RequestBody @Valid ServicoDTO obj, @PathVariable Integer id){
+    	service.update(obj);
 		return ResponseEntity.noContent().build();		
 	}
         @RequestMapping(value= "/{id}",method=RequestMethod.DELETE)

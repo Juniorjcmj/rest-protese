@@ -38,19 +38,14 @@ public class ServicoService {
                 "Objeto não encontrado!:" + id + ", Tipo : " + Servico.class.getName()));
     }
     @Transactional
-    public Servico insert(ServicoDTO dto) {
-       Servico obj =  transformaServicoDTOemServico(dto);
-        obj = repo.save(obj);
-        return obj;
+    public Servico insert(ServicoDTO obj) {
+       Servico s =  transformaServicoDTOemServico(obj);
+        return repo.save(s);
     }
-
-
-    public Servico update(ServicoDTO dto) {
-        Servico obj =  transformaServicoDTOemServico(dto);
-        obj = repo.save(obj);
-        return obj;       
+    public Servico update(ServicoDTO obj) {
+        Servico s =  transformaServicoDTOemServico(obj);
+        return repo.save(s);
     }
-
     public void delete(Integer id) {
         find(id);
         try {
@@ -58,9 +53,7 @@ public class ServicoService {
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivel excluir porque há entidades relacionadas");
         }
-
     }
-
     public List<ServicoDTO> findAll() {
         List<Servico> list = repo.findAll();
         List<ServicoDTO> listDTO = new ArrayList<>();
@@ -93,11 +86,10 @@ public class ServicoService {
     public  Servico transformaServicoDTOemServico(ServicoDTO dto){
         Cliente cliente = clienteservice.find(dto.getClienteId());
         TipoServico tipo = tipoServicoService.findNativo(dto.getTipoServicoId());
+
         if(tipo == null){
-            double valorServicoCalculado = (tipo.getPreco() - (tipo.getPreco() * dto.getValorDesconto())/100)* dto.getQuantidade();
+            dto.setValorServico((tipo.getPreco() - (tipo.getPreco() * dto.getValorDesconto())/100)* dto.getQuantidade());
         }
-
-
         Servico obj = new Servico(dto.getId(), dto.getValorServico(),
                 dto.getValorDesconto(), "teste", dto.getPaciente(),
                 dto.getStatus(), dto.getStatusPagamento(), dto.getFormaPagamento(),
