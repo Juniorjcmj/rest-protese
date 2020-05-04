@@ -6,5 +6,6 @@ CREATE TABLE protetico (
   nome varchar(255) DEFAULT NULL,
   tel_cel varchar(255) DEFAULT NULL,
   tel_fixo varchar(255) DEFAULT NULL,
+  credito double DEFAULT NULL,
   PRIMARY KEY (id)
 ) ;

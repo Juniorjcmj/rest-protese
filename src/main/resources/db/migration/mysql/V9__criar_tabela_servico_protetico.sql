@@ -1,0 +1,21 @@
+CREATE TABLE servico_protetico (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cadastrante varchar(255) DEFAULT NULL,
+  comissao double DEFAULT NULL,
+  data_cadastro datetime DEFAULT NULL,
+  data_entrega datetime DEFAULT NULL,
+  data_pagamento datetime DEFAULT NULL,
+  forma_pagamento varchar(255) DEFAULT NULL,
+  observacao varchar(255) DEFAULT NULL,
+  status varchar(255) DEFAULT NULL,
+  status_pagamento varchar(255) DEFAULT NULL,
+  valor double DEFAULT NULL,
+  protetico_id int(11) DEFAULT NULL,
+  servico_id int(11) DEFAULT NULL,
+  tipo_servico_protetico_id int(11) DEFAULT NULL,
+  quantidade int(11) DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY  (protetico_id) REFERENCES protetico(id),
+  FOREIGN KEY (servico_id) REFERENCES servico(id),
+  FOREIGN KEY (tipo_servico_protetico_id) REFERENCES tipo_servico_protetico(id)
+  );
